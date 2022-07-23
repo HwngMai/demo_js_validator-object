@@ -64,16 +64,16 @@ function themSV() {
     validation.kiemTraDoDai(
       newSv.ten,
       20,
-      3,
+      1,
       "spanTenSV",
-      "Tên sinh viên phải trên 3 kí tự và dưới 20 kí tự"
+      "Tên sinh viên phải trên 1 kí tự và dưới 20 kí tự"
     ) &
     validation.kiemTraDoDai(
       newSv.ma,
-      20,
-      8,
+      10,
+      3,
       "spanMaSV",
-      "Mã sinh viên phải trên 8 kí tự và dưới 20 kí tự"
+      "Mã sinh viên phải trên 3 kí tự và dưới 10 kí tự"
     ) &
     validation.kiemTraDoDai(
       newSv.matKhau,
@@ -83,18 +83,45 @@ function themSV() {
       "Mật khẩu sinh viên phải trên 8 kí tự và dưới 20 kí tự"
     ) &
     // Kiểm tra email
-    validation.kiemTraEmail(newSv.email, "spanEmailSV", "Email không hợp lệ");
-  console.log("isValid: ", isValid);
+    validation.kiemTraEmail(newSv.email, "spanEmailSV", "Email không hợp lệ") &
+    //Kiểm tra kí tự tên
+    validation.kiemTraTen(
+      newSv.ten,
+      "spanTenSV",
+      "Tên phải là kí tự chữ không dấu"
+    ) &
+    // Kiểm tra pass
+    validation.kiemTraPass(
+      newSv.matKhau,
+      "spanMatKhau",
+      "Pass phải có 1 kí tự in hoa, một kí tự không in hoa, một chữ số và 1 kí tự đặc biệt "
+    ) &
+    //Kiểm tra điểm
+    validation.kiemTraDiem(
+      newSv.toan,
+      "spanToan",
+      "Vui lòng nhập điểm số từ 0-10"
+    ) &
+    validation.kiemTraDiem(
+      newSv.ly,
+      "spanLy",
+      "Vui lòng nhập điểm số từ 0-10"
+    ) &
+    validation.kiemTraDiem(
+      newSv.hoa,
+      "spanHoa",
+      "Vui lòng nhập điểm số từ 0-10"
+    );
   // Nếu isValid = true
   if (isValid) {
     //Đẩy từng giá trị của biến newSv vào mảng Dssv
     dssv.push(newSv);
     console.log("dssv: ", dssv);
-    //Tạo JSON
+    //TẠO JSON
     var dssvJson = JSON.stringify(dssv);
     //thêm value dssvJSON vào localStorage DSSV
     localStorage.setItem("DSSV", dssvJson);
-    //render dssv
+    //RENDER dssv
     renderDSSV(dssv);
   }
 }
@@ -132,18 +159,106 @@ function capNhatSV(id) {
   var index = timKiemViTri(id, dssv);
   //Tạo biến mảng dummy - xóa mảng cũ gán mảng mới
   var editSv = layThongTinTuForm();
-  dssv.splice(index, 1, editSv);
-  //lấy giá trị sửa đưa cho mảng dummy
-  //Lưu lại vào JSON
-  var dssvJson = JSON.stringify(dssv);
-  //Lưu JSON vào localStorage
-  localStorage.setItem("DSSV", dssvJson);
-  // Xuất ra màn hình
-  renderDSSV(dssv);
-  //mở disable input id
-  togEnable();
-  //Reset input
-  resetInput();
+  //Validation input editSv
+  var isValid =
+    validation.kiemTrarong(
+      editSv.ma,
+      "spanMaSV",
+      "Mã sinh viên không được để rỗng"
+    ) &
+    validation.kiemTrarong(
+      editSv.ten,
+      "spanTenSV",
+      "Tên sinh viên không được để rỗng"
+    ) &
+    validation.kiemTrarong(
+      editSv.email,
+      "spanEmailSV",
+      "Email sinh viên không được để rỗng"
+    ) &
+    validation.kiemTrarong(
+      editSv.matKhau,
+      "spanMatKhau",
+      "Mật khẩu không được để rỗng"
+    ) &
+    validation.kiemTrarong(
+      editSv.toan,
+      "spanToan",
+      "Điểm toán không được để rỗng"
+    ) &
+    validation.kiemTrarong(editSv.ly, "spanLy", "Điểm lý không được để rỗng") &
+    validation.kiemTrarong(
+      editSv.hoa,
+      "spanHoa",
+      "Điểm hóa viên không được để rỗng"
+    ) &
+    // Kiểm tra độ dài
+    validation.kiemTraDoDai(
+      editSv.ten,
+      20,
+      1,
+      "spanTenSV",
+      "Tên sinh viên phải trên 1 kí tự và dưới 20 kí tự"
+    ) &
+    validation.kiemTraDoDai(
+      editSv.ma,
+      10,
+      3,
+      "spanMaSV",
+      "Mã sinh viên phải trên 3 kí tự và dưới 10 kí tự"
+    ) &
+    validation.kiemTraDoDai(
+      editSv.matKhau,
+      20,
+      8,
+      "spanMatKhau",
+      "Mật khẩu sinh viên phải trên 8 kí tự và dưới 20 kí tự"
+    ) &
+    // Kiểm tra email
+    validation.kiemTraEmail(editSv.email, "spanEmailSV", "Email không hợp lệ") &
+    //Kiểm tra kí tự tên
+    validation.kiemTraTen(
+      editSv.ten,
+      "spanTenSV",
+      "Tên phải là kí tự chữ không dấu"
+    ) &
+    // Kiểm tra pass
+    validation.kiemTraPass(
+      editSv.matKhau,
+      "spanMatKhau",
+      "Pass phải có 1 kí tự in hoa, một kí tự không in hoa, một chữ số và 1 kí tự đặc biệt "
+    ) &
+    //Kiểm tra điểm
+    validation.kiemTraDiem(
+      editSv.toan,
+      "spanToan",
+      "Vui lòng nhập điểm số từ 0-10"
+    ) &
+    validation.kiemTraDiem(
+      editSv.ly,
+      "spanLy",
+      "Vui lòng nhập điểm số từ 0-10"
+    ) &
+    validation.kiemTraDiem(
+      editSv.hoa,
+      "spanHoa",
+      "Vui lòng nhập điểm số từ 0-10"
+    );
+  // Nếu true
+  if (isValid) {
+    dssv.splice(index, 1, editSv);
+    //lấy giá trị sửa đưa cho mảng dummy
+    //Lưu lại vào JSON
+    var dssvJson = JSON.stringify(dssv);
+    //Lưu JSON vào localStorage
+    localStorage.setItem("DSSV", dssvJson);
+    // Xuất ra màn hình
+    renderDSSV(dssv);
+    //mở disable input id
+    togEnable();
+    //Reset input
+    resetInput();
+  }
 }
 //** Reset thông tin
 function resetThongTin() {
@@ -155,13 +270,16 @@ function resetThongTin() {
 //** Tìm kiếm theo tên show lên input
 //Tìm tên => xuất index
 function searchTen(ten) {
-  //lấy index mảng chứa tên đó
-  var index = timKiemTen(ten, dssv);
-  if (index != -1) {
-    var sv = dssv[i];
-    showThongTin(sv);
-    togDisable();
-  } else {
-    alert("Không tìm thấy");
+  if (isValid) {
+    //lấy index mảng chứa tên đó
+    var index = timKiemTen(ten, dssv);
+    if (index != -1) {
+      var sv = dssv[i];
+      showThongTin(sv);
+      togDisable();
+    } else {
+      alert("Không tìm thấy");
+      resetThongTin();
+    }
   }
 }
