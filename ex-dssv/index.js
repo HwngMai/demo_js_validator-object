@@ -107,11 +107,13 @@ function themSV() {
   var newSv = layThongTinTuForm();
   //Kiểm tra input
   var isValid =
+    // Kiểm tra valid
     checkIsValid(newSv) &
+    // Kiểm tra trùng
     validation.kiemTraTrung(newSv.ma, "spanMaSV", "Mã sinh viên bị trùng");
-  //Kiểm tra trùng
+  console.log("isValid: ", isValid);
   // Nếu isValid = true
-  if (isValid) {
+  if (isValid == true) {
     //Đẩy từng giá trị của biến newSv vào mảng Dssv
     dssv.push(newSv);
     console.log("dssv: ", dssv);
@@ -121,6 +123,7 @@ function themSV() {
     localStorage.setItem("DSSV", dssvJson);
     //RENDER dssv
     renderDSSV(dssv);
+    resetInput();
   }
 }
 //** Xóa sinh viên
@@ -144,12 +147,14 @@ function xoaSinhVien(id) {
 function suaSinhVien(id) {
   //Tìm index của sv trong mảng dssv
   var index = timKiemViTri(id, dssv);
+  console.log("index: ", index);
   //Nếu tìm thấy (index != -1) thì show thông tin lên form
   if (index != -1) {
-    var sv = dssv[i];
+    var sv = dssv[index];
     showThongTin(sv);
     togDisable("txtMaSV");
-    togEnable('btnCapNhat');
+    togDisable("btnThemSV");
+    togEnable("btnCapNhat");
   }
 }
 //** Cập nhật thông tin
@@ -164,13 +169,13 @@ function capNhatSV(id) {
   // Nếu true
   if (isValid) {
     //cắt bỏ mảng cũ chèn mảng editsv vào vị trí index
-    dssv.splice(index - 1, 1, editSv);
-    console.log(dssv.indexOf(editSv));
+    dssv.splice(index, 1, editSv);
     //lấy lại mảng dssv
     renderDSSV(dssv);
     //mở disable input id
     togEnable("txtMaSV");
-    togDisable('btnCapNhat');
+    togDisable("btnCapNhat");
+    togEnable("btnThemSV");
     //Reset input
     resetInput();
     //Lưu lại dssv vào biến JSON
@@ -184,7 +189,9 @@ function resetThongTin() {
   //Reset input
   resetInput();
   //mở disable input id
-  togEnable();
+  togEnable("txtMaSV");
+  togEnable("btnThemSV");
+  togDisable("btnCapNhat");
 }
 //** Tìm kiếm theo tên show lên input
 //Tìm tên => xuất index
@@ -194,9 +201,10 @@ function searchTen(ten) {
   if (index != -1) {
     var sv = dssv[i];
     showThongTin(sv);
-    togDisable();
+    togDisable("txtMaSV");
+    togEnable("btnCapNhat");
   } else {
-    alert("Không tìm thấy");
+    alert("Không tìm thấy, vui lòng kiểm tra lại tên cần tìm");
     resetThongTin();
   }
 }

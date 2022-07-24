@@ -66,13 +66,16 @@ var validation = {
   //Kiểm tra trùng id
   kiemTraTrung: function (value, idError, mess) {
     for (i = 0; i < dssv.length; i++) {
+      // gán biến chứa mảng có giá trị cần so sánh
       var sv = dssv[i];
+      // nếu giá trị cần tìm khác 0 và bằng giá trị so sánh
       if (value.length != 0 && value == sv.ma) {
+        // Báo lỗi
         document.getElementById(idError).innerHTML = mess;
+        // Trả về false
         return false;
-      } else {
-        return true;
       }
     }
+    return true;
   },
 };
