@@ -63,4 +63,16 @@ var validation = {
       return true;
     }
   },
+  //Kiểm tra trùng id
+  kiemTraTrung: function (value, idError, mess) {
+    for (i = 0; i < dssv.length; i++) {
+      var sv = dssv[i];
+      if (value.length != 0 && value == sv.ma) {
+        document.getElementById(idError).innerHTML = mess;
+        return false;
+      } else {
+        return true;
+      }
+    }
+  },
 };

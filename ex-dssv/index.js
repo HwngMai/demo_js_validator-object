@@ -27,38 +27,38 @@ if (dssvJson != null) {
 function themSV() {
   //Lấy từng biến vào biến-mảng = newSv cho func layThongTinTuForm của controller.js
   var newSv = layThongTinTuForm();
-  //Kiểm tra rỗng (dấu & plus bit)
+  //Kiểm tra trống (dấu & plus bit)
   var isValid =
     validation.kiemTrarong(
       newSv.ma,
       "spanMaSV",
-      "Mã sinh viên không được để rỗng"
+      "Mã sinh viên không được để trống"
     ) &
     validation.kiemTrarong(
       newSv.ten,
       "spanTenSV",
-      "Tên sinh viên không được để rỗng"
+      "Tên sinh viên không được để trống"
     ) &
     validation.kiemTrarong(
       newSv.email,
       "spanEmailSV",
-      "Email sinh viên không được để rỗng"
+      "Email sinh viên không được để trống"
     ) &
     validation.kiemTrarong(
       newSv.matKhau,
       "spanMatKhau",
-      "Mật khẩu không được để rỗng"
+      "Mật khẩu không được để trống"
     ) &
     validation.kiemTrarong(
       newSv.toan,
       "spanToan",
-      "Điểm toán không được để rỗng"
+      "Điểm toán không được để trống"
     ) &
-    validation.kiemTrarong(newSv.ly, "spanLy", "Điểm lý không được để rỗng") &
+    validation.kiemTrarong(newSv.ly, "spanLy", "Điểm lý không được để trống") &
     validation.kiemTrarong(
       newSv.hoa,
       "spanHoa",
-      "Điểm hóa viên không được để rỗng"
+      "Điểm hóa không được để trống"
     ) &
     // Kiểm tra độ dài
     validation.kiemTraDoDai(
@@ -111,7 +111,9 @@ function themSV() {
       newSv.hoa,
       "spanHoa",
       "Vui lòng nhập điểm số từ 0-10"
-    );
+    ) &
+    //Kiểm tra trùng
+    validation.kiemTraTrung(newSv.ma, "spanMaSV", "Mã sinh viên bị trùng");
   // Nếu isValid = true
   if (isValid) {
     //Đẩy từng giá trị của biến newSv vào mảng Dssv
@@ -164,33 +166,33 @@ function capNhatSV(id) {
     validation.kiemTrarong(
       editSv.ma,
       "spanMaSV",
-      "Mã sinh viên không được để rỗng"
+      "Mã sinh viên không được để trống"
     ) &
     validation.kiemTrarong(
       editSv.ten,
       "spanTenSV",
-      "Tên sinh viên không được để rỗng"
+      "Tên sinh viên không được để trống"
     ) &
     validation.kiemTrarong(
       editSv.email,
       "spanEmailSV",
-      "Email sinh viên không được để rỗng"
+      "Email sinh viên không được để trống"
     ) &
     validation.kiemTrarong(
       editSv.matKhau,
       "spanMatKhau",
-      "Mật khẩu không được để rỗng"
+      "Mật khẩu không được để trống"
     ) &
     validation.kiemTrarong(
       editSv.toan,
       "spanToan",
-      "Điểm toán không được để rỗng"
+      "Điểm toán không được để trống"
     ) &
-    validation.kiemTrarong(editSv.ly, "spanLy", "Điểm lý không được để rỗng") &
+    validation.kiemTrarong(editSv.ly, "spanLy", "Điểm lý không được để trống") &
     validation.kiemTrarong(
       editSv.hoa,
       "spanHoa",
-      "Điểm hóa viên không được để rỗng"
+      "Điểm hóa không được để trống"
     ) &
     // Kiểm tra độ dài
     validation.kiemTraDoDai(
@@ -244,20 +246,23 @@ function capNhatSV(id) {
       "spanHoa",
       "Vui lòng nhập điểm số từ 0-10"
     );
+  //Kiểm tra trùng
+  // validation.kiemTraTrung(editSv.ma, "spanMaSV", "Mã sinh viên bị trùng");
   // Nếu true
   if (isValid) {
-    dssv.splice(index, 1, editSv);
-    //lấy giá trị sửa đưa cho mảng dummy
-    //Lưu lại vào JSON
-    var dssvJson = JSON.stringify(dssv);
-    //Lưu JSON vào localStorage
-    localStorage.setItem("DSSV", dssvJson);
-    // Xuất ra màn hình
+    //cắt bỏ mảng cũ chèn mảng editsv vào vị trí index
+    dssv.splice(index - 1, 1, editSv);
+    console.log(dssv.indexOf(editSv));
+    //lấy lại mảng dssv
     renderDSSV(dssv);
     //mở disable input id
     togEnable();
     //Reset input
     resetInput();
+    //Lưu lại dssv vào biến JSON
+    var dssvJson = JSON.stringify(dssv);
+    //Lưu JSON vào localStorage
+    localStorage.setItem("DSSV", dssvJson);
   }
 }
 //** Reset thông tin
@@ -270,16 +275,14 @@ function resetThongTin() {
 //** Tìm kiếm theo tên show lên input
 //Tìm tên => xuất index
 function searchTen(ten) {
-  if (isValid) {
-    //lấy index mảng chứa tên đó
-    var index = timKiemTen(ten, dssv);
-    if (index != -1) {
-      var sv = dssv[i];
-      showThongTin(sv);
-      togDisable();
-    } else {
-      alert("Không tìm thấy");
-      resetThongTin();
-    }
+  //lấy index mảng chứa tên đó
+  var index = timKiemTen(ten, dssv);
+  if (index != -1) {
+    var sv = dssv[i];
+    showThongTin(sv);
+    togDisable();
+  } else {
+    alert("Không tìm thấy");
+    resetThongTin();
   }
 }

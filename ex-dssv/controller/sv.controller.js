@@ -94,3 +94,90 @@ function timKiemTen(searchTen, dssv) {
   // Nếu sv.ma != id trả về giá trị -1
   return -1;
 }
+// Kiểm tra isvalid
+function checkIsValid() {
+  validation.kiemTrarong(
+    editSv.ma,
+    "spanMaSV",
+    "Mã sinh viên không được để trống"
+  ) &
+    validation.kiemTrarong(
+      editSv.ten,
+      "spanTenSV",
+      "Tên sinh viên không được để trống"
+    ) &
+    validation.kiemTrarong(
+      editSv.email,
+      "spanEmailSV",
+      "Email sinh viên không được để trống"
+    ) &
+    validation.kiemTrarong(
+      editSv.matKhau,
+      "spanMatKhau",
+      "Mật khẩu không được để trống"
+    ) &
+    validation.kiemTrarong(
+      editSv.toan,
+      "spanToan",
+      "Điểm toán không được để trống"
+    ) &
+    validation.kiemTrarong(editSv.ly, "spanLy", "Điểm lý không được để trống") &
+    validation.kiemTrarong(
+      editSv.hoa,
+      "spanHoa",
+      "Điểm hóa không được để trống"
+    ) &
+    // Kiểm tra độ dài
+    validation.kiemTraDoDai(
+      editSv.ten,
+      20,
+      1,
+      "spanTenSV",
+      "Tên sinh viên phải trên 1 kí tự và dưới 20 kí tự"
+    ) &
+    validation.kiemTraDoDai(
+      editSv.ma,
+      10,
+      3,
+      "spanMaSV",
+      "Mã sinh viên phải trên 3 kí tự và dưới 10 kí tự"
+    ) &
+    validation.kiemTraDoDai(
+      editSv.matKhau,
+      20,
+      8,
+      "spanMatKhau",
+      "Mật khẩu sinh viên phải trên 8 kí tự và dưới 20 kí tự"
+    ) &
+    // Kiểm tra email
+    validation.kiemTraEmail(editSv.email, "spanEmailSV", "Email không hợp lệ") &
+    //Kiểm tra kí tự tên
+    validation.kiemTraTen(
+      editSv.ten,
+      "spanTenSV",
+      "Tên phải là kí tự chữ không dấu"
+    ) &
+    // Kiểm tra pass
+    validation.kiemTraPass(
+      editSv.matKhau,
+      "spanMatKhau",
+      "Pass phải có 1 kí tự in hoa, một kí tự không in hoa, một chữ số và 1 kí tự đặc biệt "
+    ) &
+    //Kiểm tra điểm
+    validation.kiemTraDiem(
+      editSv.toan,
+      "spanToan",
+      "Vui lòng nhập điểm số từ 0-10"
+    ) &
+    validation.kiemTraDiem(
+      editSv.ly,
+      "spanLy",
+      "Vui lòng nhập điểm số từ 0-10"
+    ) &
+    validation.kiemTraDiem(
+      editSv.hoa,
+      "spanHoa",
+      "Vui lòng nhập điểm số từ 0-10"
+    );
+  console.log("checkIsValid: ", checkIsValid);
+}
