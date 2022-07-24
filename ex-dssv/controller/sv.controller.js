@@ -66,8 +66,10 @@ function showThongTin(sv) {
 // FUNCTION disable ô input
 function togDisable() {
   document.getElementById("txtMaSV").disabled = true;
+  document.getElementById("btnCapNhat").disabled = false;
 }
 function togEnable() {
+  document.getElementById("btnCapNhat").disabled = true;
   document.getElementById("txtMaSV").disabled = false;
 }
 // FUNCTION reset thông tin
@@ -94,4 +96,3 @@ function timKiemTen(searchTen, dssv) {
   // Nếu sv.ma != id trả về giá trị -1
   return -1;
 }
-
