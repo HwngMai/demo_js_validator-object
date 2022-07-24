@@ -32,7 +32,8 @@ var validation = {
     }
   },
   kiemTraTen: function (value, idError, mess) {
-    const re = /^[A-Za-z]+$/;
+    // const re = /^[A-Za-z]+$/;
+    const re = /^[A-Za-z\s]{1,}[\.]{0,1}[A-Za-z\s]{0,}$/;
     // nếu input có giá trị và re value = false
     if (value.length != 0 && !re.test(value)) {
       document.getElementById(idError).innerHTML = mess;
@@ -53,10 +54,16 @@ var validation = {
     }
   },
   kiemTraDiem: function (value, idError, mess) {
-    // Pass phải có 1 kí tự in hoa, một kí tự ko in hoa, một chữ số và 1 kí tự đặc biệt
-    const re = /^[0-9][0]?$|^10$/;
-    // nếu input có giá trị và re value = false
-    if (value.length != 0 && !re.test(value)) {
+    // tạo biến regex
+    const re = /^\s*[+-]?(\d+|\d*\.\d+|\d+\.\d*)([Ee][+-]?\d+)?\s*$/;
+    // Kiểm tra có nằm ngoài 0-10
+    var isOut0to10 = value < 0 || value > 10;
+    // Kiểm tra có khác quy tắc theo biến regex
+    var isRe = !re.test(value);
+    console.log("isRe: ", isRe);
+    console.log("is0to10: ", isOut0to10);
+    // nếu input có giá trị và nằm ngoài 0-10 hoặc ko theo quy tắc biến regex
+    if (value.length != 0 && (isOut0to10 || isRe)) {
       document.getElementById(idError).innerHTML = mess;
       return false;
     } else {

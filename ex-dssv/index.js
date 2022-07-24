@@ -23,7 +23,7 @@ if (dssvJson != null) {
   // render lại hàm dssv
   renderDSSV(dssv);
 }
-//FUNCTION Kiểm tra biến isvalid
+//FUNCTION** Kiểm tra biến isvalid
 function checkIsValid(sv) {
   var isValid =
     validation.kiemTrarong(
@@ -101,7 +101,7 @@ function checkIsValid(sv) {
   return isValid;
 }
 
-//** Thêm sinh viên
+//FUNCTION** Thêm sinh viên
 function themSV() {
   //Lấy từng biến vào biến-mảng = newSv cho func layThongTinTuForm của controller.js
   var newSv = layThongTinTuForm();
@@ -126,7 +126,7 @@ function themSV() {
     resetInput();
   }
 }
-//** Xóa sinh viên
+//FUNCTION** Xóa sinh viên
 function xoaSinhVien(id) {
   // Tìm index của sv trong mảng dssv
   var index = timKiemViTri(id, dssv);
@@ -142,7 +142,7 @@ function xoaSinhVien(id) {
     localStorage.setItem("DSSV", dssvJson);
   }
 }
-//** Sửa sinh viên
+//FUNCTION** Sửa sinh viên
 //Show thông tin lên form - cho phép sửa + cập nhật
 function suaSinhVien(id) {
   //Tìm index của sv trong mảng dssv
@@ -157,7 +157,7 @@ function suaSinhVien(id) {
     togEnable("btnCapNhat");
   }
 }
-//** Cập nhật thông tin
+//FUNCTION** Cập nhật thông tin
 function capNhatSV(id) {
   //lấy index mảng chứa id đó
   var index = timKiemViTri(id, dssv);
@@ -184,7 +184,7 @@ function capNhatSV(id) {
     localStorage.setItem("DSSV", dssvJson);
   }
 }
-//** Reset thông tin
+//FUNCTION** Reset thông tin
 function resetThongTin() {
   //Reset input
   resetInput();
@@ -193,7 +193,7 @@ function resetThongTin() {
   togEnable("btnThemSV");
   togDisable("btnCapNhat");
 }
-//** Tìm kiếm theo tên show lên input
+//FUNCTION** Tìm kiếm theo tên show lên input
 //Tìm tên => xuất index
 function searchTen(ten) {
   //lấy index mảng chứa tên đó
@@ -203,8 +203,9 @@ function searchTen(ten) {
     showThongTin(sv);
     togDisable("txtMaSV");
     togEnable("btnCapNhat");
+    togDisable("btnThemSV");
   } else {
-    alert("Không tìm thấy, vui lòng kiểm tra lại tên cần tìm");
+    alert("Không tìm thấy, vui lòng kiểm tra lại tên cần tìm !");
     resetThongTin();
   }
 }
