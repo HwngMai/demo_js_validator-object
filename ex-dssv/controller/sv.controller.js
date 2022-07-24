@@ -63,14 +63,12 @@ function showThongTin(sv) {
   document.getElementById("txtDiemLy").value = sv.ly;
   document.getElementById("txtDiemHoa").value = sv.hoa;
 }
-// FUNCTION disable ô input
-function togDisable() {
-  document.getElementById("txtMaSV").disabled = true;
-  document.getElementById("btnCapNhat").disabled = false;
+// FUNCTION disable ô input và btn
+function togDisable(id) {
+  document.getElementById(id).disabled = true;
 }
-function togEnable() {
-  document.getElementById("btnCapNhat").disabled = true;
-  document.getElementById("txtMaSV").disabled = false;
+function togEnable(id) {
+  document.getElementById(id).disabled = false;
 }
 // FUNCTION reset thông tin
 function resetInput() {

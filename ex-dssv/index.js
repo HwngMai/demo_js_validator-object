@@ -148,7 +148,8 @@ function suaSinhVien(id) {
   if (index != -1) {
     var sv = dssv[i];
     showThongTin(sv);
-    togDisable();
+    togDisable("txtMaSV");
+    togEnable('btnCapNhat');
   }
 }
 //** Cập nhật thông tin
@@ -168,7 +169,8 @@ function capNhatSV(id) {
     //lấy lại mảng dssv
     renderDSSV(dssv);
     //mở disable input id
-    togEnable();
+    togEnable("txtMaSV");
+    togDisable('btnCapNhat');
     //Reset input
     resetInput();
     //Lưu lại dssv vào biến JSON
